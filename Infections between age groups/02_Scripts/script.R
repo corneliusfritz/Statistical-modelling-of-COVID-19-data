@@ -2,7 +2,6 @@
 # 1. Get Data----
 
 
-library(tidyverse)
 library(data.table)
 library(gridExtra)
 library(grid)
@@ -13,14 +12,8 @@ library(lubridate)
 
 rm(list=ls(all=TRUE))
 
-clean_units <- function(x){
-  attr(x,"units") <- NULL
-  class(x) <- setdiff(class(x),"units")
-  x
-}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-load("01_Data/bayern_data_long.RData")
-# load("01_Data/simulated_bayern_data_long.RData")
+load("../01_Data/simulated_bayern_data_long.RData")
 
 # Get year of the dates 
 data_long$year = data.table::year(data_long$date)
@@ -101,7 +94,6 @@ complete_data$Change_80 =  (complete_data$Anzahl_80+1)/ (complete_data$Anzahl_80
 complete_data$Change_80_minus =  (complete_data$Anzahl_80_minus+1)/ (complete_data$Anzahl_80_minus_two+1)
 
 complete_data = complete_data[!is.na(Anzahl_80_minus_two)]
-complete_data$bundesland= district_data$bundesland[match(complete_data$Landkreis, district_data$name_rki)]
 
 # Calculate all models ----
 
